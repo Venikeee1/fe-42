@@ -1,0 +1,12 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.alert {
+  color: red;
+}
+
+.thumb {
+  width: 150px;
+}
