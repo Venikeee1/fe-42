@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cursor-decorator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: purple;
+  transition: transform 0.4s;
+}
+
+.img {
+  width: 100%;
+  margin: 100px 0;
+}
+
+.img:focus {
+  box-shadow: 1px 1px 8px 10px rgba(0, 0, 0, 0.3);
+}
+
+.text {
+  font-size: 18px;
+  line-height: 1.3;
+  font-family: sens-serif;
+}
+
+.blur-up {
+  filter: blur(5px);
+  transition: filter 400ms;
+}
+
+.blur-up.lazyloaded {
+  filter: blur(0);
+}
