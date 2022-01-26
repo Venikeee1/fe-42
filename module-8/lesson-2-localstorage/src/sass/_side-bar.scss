@@ -1,0 +1,36 @@
+.side-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background: purple;
+  transition: transform 0.4s;
+}
+
+.side-bar.closed {
+  transform: translateX(-100%);
+}
+
+.list {
+  list-style: none;
+}
+
+.list-link {
+  display: block;
+  margin: 10px 0;
+  font-family: sans-serif;
+  color: #fff;
+  font-size: 20px;
+}
+
+.toggle-side-menu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  transition: transform 0.4s;
+
+  &.closed {
+    transform: rotate(180deg);
+  }
+}
