@@ -1,0 +1,2 @@
+Get https://api.opendota.com/api/heroes
+content-type: application/json
