@@ -1,34 +1,55 @@
 import './sass/main.scss';
-// import './js/questions';
-import { getUsers, deleteUser } from './js/api/mockUsersApi';
+import { getUsers, deleteUser, createUser } from './js/api/mockUsersApi';
 import { UserCard } from './js/components/UserCard';
-import './js/userForm';
+import { userListFactory } from './js/userList';
+import { addUserForm } from './js/userForm';
+import gsap from 'gsap';
 
 const usersListRef = document.querySelector('.users-list');
-let users = [];
 
 const renderUsersList = usersList => {
+  const sortedUsers = [...usersList].sort((a, b) => {
+    return a.name > b.name ? 1 : -1;
+  });
+
   usersListRef.innerHTML = '';
-  const usersNodeList = usersList.map(user => UserCard(user));
+  const usersNodeList = sortedUsers.map(user => UserCard(user));
+  gsap.to(usersNodeList, { y: 0, duration: 1, stagger: 0.2, opacity: 1 });
   usersListRef.append(...usersNodeList);
 };
 
-const handleUserDelete = event => {
+const userListManager = userListFactory({ onChange: renderUsersList });
+
+const handleUserDelete = async event => {
   const { target } = event;
 
   if (target.closest('.delete-user-btn')) {
     const { id } = target.dataset;
 
-    deleteUser(id).then(() => {
-      users = users.filter(user => user.id !== id);
-      renderUsersList(users);
-    });
+    await deleteUser(id);
+    userListManager.deleteUser(id);
   }
 };
 
-getUsers().then(({ data: usersList }) => {
-  users = usersList;
-  renderUsersList(usersList);
+const render = async () => {
+  const { data: usersList } = await getUsers();
+  userListManager.setUsers(usersList);
+};
+
+const handleSubmit = async body => {
+  try {
+    const { data: newUser } = await createUser(body);
+    userListManager.addUsers(newUser);
+    resetForm();
+  } catch (error) {
+    isDataLoading = false;
+  }
+};
+
+const { resetForm } = addUserForm({
+  onSubmit: handleSubmit,
 });
 
 usersListRef.addEventListener('click', handleUserDelete);
+
+render();

@@ -4,12 +4,8 @@ export const createElement = (nodeName, options, children) => {
 
   if (nodeClass) {
     const classList = nodeClass.split(' '); // ['title', 'description']
-    nodeElement.classList.add(...classList);
+    nodeElement.classList.add(...classList); 
   }
-
-  Object.keys(restOptions).forEach(optionKey => {
-    nodeElement[optionKey] = restOptions[optionKey];
-  });
 
   if (children) {
     const nodeChildren = Array.isArray(children) ? children : [children];
@@ -22,6 +18,10 @@ export const createElement = (nodeName, options, children) => {
       nodeElement.setAttribute(`data-${dataKey}`, dataValue);
     });
   }
+
+  Object.keys(restOptions).forEach(optionKey => {
+    nodeElement[optionKey] = restOptions[optionKey];
+  });
 
   return nodeElement;
 };
